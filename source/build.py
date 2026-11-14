@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Encrypt data.json with the site password and inject it into template.html -> dist/index.html
 
+Theme modules (themes/*.js) are public, contain no data, and are inlined as-is so the
+output stays a single file.
+
 Usage: python3 build.py [path-to-password-file]
 """
 import base64
@@ -15,6 +18,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
 ROOT = Path(__file__).resolve().parent
 ITERATIONS = 250_000
+THEMES_TOKEN = "/*__THEMES__*/"
 
 
 def main() -> int:
@@ -36,6 +40,20 @@ def main() -> int:
 
     b64 = lambda b: base64.b64encode(b).decode("ascii")
     html = (ROOT / "template.html").read_text(encoding="utf-8")
+
+    theme_files = sorted((ROOT / "themes").glob("*.js"))
+    if not theme_files:
+        print("no theme modules found in themes/", file=sys.stderr)
+        return 1
+    # one <script> per module, so a broken theme cannot take the others down with it
+    themes_js = "</script>\n<script>".join(
+        f"/* themes/{f.name} */\n" + f.read_text(encoding="utf-8").replace("</script", "<\\/script").replace("<!--", "<\\!--")
+        for f in theme_files
+    )
+    if html.count(THEMES_TOKEN) != 1:
+        print(f"template.html must contain {THEMES_TOKEN} exactly once", file=sys.stderr)
+        return 1
+    html = html.replace(THEMES_TOKEN, themes_js)
     for token, value in (("__SALT__", b64(salt)), ("__IV__", b64(iv)), ("__CT__", b64(ciphertext)),
                          ("__ITER__", str(ITERATIONS))):
         if html.count(token) != 1:
@@ -47,6 +65,7 @@ def main() -> int:
     dist.mkdir(exist_ok=True)
     (dist / "index.html").write_text(html, encoding="utf-8")
     (dist / ".nojekyll").write_text("", encoding="utf-8")
+    print(f"themes: {', '.join(f.stem for f in theme_files)}")
     print(f"built dist/index.html ({len(html.encode('utf-8')):,} bytes, {len(plaintext):,} bytes encrypted)")
     return 0
 
