@@ -412,9 +412,9 @@ ${S}{
   --card-radius:21px;
   --chip-bg:var(--qk-hatch),#E6EFD8; --chip-text:#52733F;
   --danger:#D4614F;
-  --font-body:'Chiron GoRound TC','Zen Maru Gothic','M PLUS Rounded 1c','PingFang TC','Heiti TC','Noto Sans TC','Microsoft JhengHei',system-ui,sans-serif;
-  --font-display:'Fredoka','Baloo 2','Chiron GoRound TC','Zen Maru Gothic','PingFang TC',system-ui,sans-serif;
-  --font-script:'Caveat','Patrick Hand','Bradley Hand','Segoe Print','Fredoka','Zen Maru Gothic',cursive;
+  --font-body:'Huninn','PingFang TC','Heiti TC','Noto Sans TC','Microsoft JhengHei',system-ui,sans-serif;
+  --font-display:'Fredoka','Baloo 2','Huninn','PingFang TC','Heiti TC','Noto Sans TC',system-ui,sans-serif;
+  --font-script:'Caveat','Bradley Hand','Segoe Print','Fredoka','Huninn',cursive;
   --script-style:normal; --script-w:700; --body-w:400;
   --qk-ink:#5A4A42; --qk-paper:#FFFCF5; --qk-sage:#9DBF86; --qk-sage-deep:#6F9A5C; --qk-apricot:#EFA875; --qk-apricot-pale:#F9DCC0;
   /* crayon hatching: paper showing through at -38deg, uneven on purpose */
@@ -1230,9 +1230,8 @@ ${S} .search-input:focus{box-shadow:inset 0 0 0 1.5px var(--qk-sage-deep),0 0 0 
     desc: '色鉛筆手繪、微笑小袋鼠',
     themeColor: '#FFF9EE',
     fonts: [
-      'https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&display=swap',
-      'https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@400;500;700&display=swap',
-      'https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Huninn&display=swap',
+      'https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap',
       'https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap'
     ],
     css: css,

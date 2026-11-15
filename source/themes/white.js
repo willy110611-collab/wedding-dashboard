@@ -16,9 +16,10 @@ ${S}{
   --card-radius:14px;
   --chip-bg:#FFFFFF; --chip-text:#75706A;
   --danger:#A9604E;
-  --font-body:"Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
-  --font-display:"Cormorant Garamond","Cormorant","Hoefler Text","Baskerville","Times New Roman","Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
-  --font-script:"Great Vibes","Snell Roundhand","Apple Chancery","Cormorant Garamond","Hoefler Text","Baskerville","Times New Roman",serif;
+  --font-body:"Chiron Sung HK","Songti TC","PingFang TC","Heiti TC","PMingLiU","Noto Serif CJK TC",serif;
+  --font-display:"Italiana","Didot","Bodoni 72","Hoefler Text","Times New Roman","Chiron Sung HK","Songti TC","PingFang TC","Heiti TC","PMingLiU","Noto Serif CJK TC",serif;
+  --font-script:"Italiana","Didot","Bodoni 72","Hoefler Text","Times New Roman",serif;
+  --white-note:"Cormorant Garamond","Hoefler Text","Baskerville","Times New Roman","Chiron Sung HK","Songti TC",serif;
 
   --ink-3:#A6A199; --accent-ink:#8F7843;
   --hair:rgba(201,178,124,.6); --hair-2:rgba(201,178,124,.3); --hair-b:rgba(201,178,124,.2);
@@ -46,9 +47,18 @@ ${S}{
   --alert-bg:linear-gradient(120deg,#FBF3F0,#FFFFFF); --alert-ink:#A9604E;
   --booked-item:linear-gradient(135deg,#FFFFFF,#FBF8F1);
   --bar-bg:rgba(255,255,255,.88); --tabbar-bg:rgba(255,255,255,.97); --sheet-bg:linear-gradient(160deg,rgba(255,255,255,.97),rgba(250,248,245,.94)); --scrim:rgba(40,38,34,.26);
-  --latin-style:italic; --head-w:300; --orn-h:14px;
+  --latin:var(--font-body); --latin-style:normal; --script-style:normal; --script-w:400; --num-w:300; --head-w:300; --orn-h:14px;
 }
 ${S} .bg{background:#FCFBF9}
+/* Italiana for the English titles, thin Song numerals, small Cormorant italic notes */
+${S} .script{letter-spacing:.04em}
+${S} .lock-title{font-size:clamp(36px,11vw,48px);margin-bottom:6px}
+${S} .hero-title{font-size:clamp(38px,11.8vw,54px)}
+${S} .page-subtitle,${S} .count-cap,${S} .sub small,${S} .booked .lab,${S} .sum .num small{font-family:var(--white-note);font-style:italic}
+${S} .page-subtitle{font-size:19px}
+${S} .count-cap{font-size:18px}
+${S} .lock-date,${S} .hero-line b{font-weight:300}
+@media (min-width:760px){${S} .lock-title{font-size:56px}${S} .hero-title{font-size:78px}}
 /* lots of air, thin type */
 ${S} .page-title{letter-spacing:.44em;padding-left:.44em}
 ${S} .page-subtitle{letter-spacing:.12em}
@@ -129,7 +139,12 @@ ${S} .settings-sheet{box-shadow:0 -18px 50px -24px rgba(60,54,40,.35),inset 0 1p
 
   window.WeddingThemes.white = {
     id: 'white', name: '純白系列', desc: '珍珠白・極簡金線', themeColor: '#FFFFFF',
-    fonts: [], css: css, swatch: swatch, ornament: ornament,
+    fonts: [
+      'https://fonts.googleapis.com/css2?family=Chiron+Sung+HK:wght@300;500&display=swap',
+      'https://fonts.googleapis.com/css2?family=Italiana&display=swap',
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,400&display=swap'
+    ],
+    css: css, swatch: swatch, ornament: ornament,
     lockArt: lockArt, cornerMascot: '', headingIcon: '',
     particles: particles, runner: null
   };

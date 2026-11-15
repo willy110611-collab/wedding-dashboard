@@ -19,9 +19,9 @@ ${S}{
   --card-radius:12px;
   --chip-bg:#FFFCF3; --chip-text:#66503A;
   --danger:#8C3A48;
-  --font-body:"Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
-  --font-display:"Cormorant Garamond","Cormorant","Hoefler Text","Baskerville","Times New Roman","Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
-  --font-script:"Great Vibes","Pinyon Script","Snell Roundhand","Apple Chancery","Cormorant Garamond","Hoefler Text","Baskerville","Times New Roman",serif;
+  --font-body:"Cactus Classical Serif","Songti TC","PingFang TC","Heiti TC","PMingLiU","Noto Serif CJK TC",serif;
+  --font-display:"Cinzel","Trajan Pro","Copperplate","Times New Roman","Cactus Classical Serif","Songti TC","PingFang TC","Heiti TC","PMingLiU","Noto Serif CJK TC",serif;
+  --font-script:"Pinyon Script","Snell Roundhand","Apple Chancery","Times New Roman",serif;
 
   --ink-3:#8A7353; --accent-ink:#76561C;
   --hair:rgba(168,130,47,.62); --hair-2:rgba(168,130,47,.34); --hair-b:rgba(168,130,47,.2);
@@ -106,6 +106,7 @@ ${S} .sub small{font-weight:600;font-size:13px;letter-spacing:.14em}
 ${S} .foot .latin{font-size:12px;letter-spacing:.2em;text-transform:uppercase}
 ${S} .page-title{letter-spacing:.4em;padding-left:.4em}
 ${S} .hero-line b{font-weight:600;letter-spacing:.36em;padding-left:.36em}
+${S} .sum .num{font-size:clamp(15px,4.7vw,24px);letter-spacing:0}
 ${S} .sum .lab,${S} .g5 .lab{letter-spacing:.3em;padding-left:.3em;font-weight:500}
 ${S} .stat-tile .lab{letter-spacing:.12em}
 ${S} .stat-tile .go{letter-spacing:.24em}
@@ -437,7 +438,11 @@ ${S} .gold-comet{position:absolute;left:0;bottom:0;width:100%;height:240px;point
 
   window.WeddingThemes.gold = {
     id: 'gold', name: '金色奢華', desc: '鎏金箔光・Art Deco 典雅', themeColor: '#FBF3DF',
-    fonts: ['https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Pinyon+Script&display=swap'],
+    fonts: [
+      'https://fonts.googleapis.com/css2?family=Cactus+Classical+Serif&display=swap',
+      'https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&display=swap',
+      'https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap'
+    ],
     css: css, swatch: swatch, ornament: ornament,
     lockArt: lockArt, cornerMascot: cornerMascot, headingIcon: headingIcon,
     particles: particles, runner: { mount: mount, ground: false }

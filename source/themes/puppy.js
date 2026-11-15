@@ -349,7 +349,8 @@
 
   /* ---------- css ---------- */
   var S = 'html[data-theme="puppy"]';
-  var FONT = '"Zen Maru Gothic","Chiron GoRound TC","M PLUS Rounded 1c","PingFang TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif';
+  var FONT = '"Iansui","PingFang TC","Heiti TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif';
+  var FONT_EN = '"Patrick Hand","Bradley Hand","Segoe Print","Iansui","PingFang TC","Heiti TC","Noto Sans TC","Microsoft JhengHei",system-ui,sans-serif';
   var LINE = 'rgba(90,74,66,.82)';
 
   /* runner rig (px); RZ = px per concept unit */
@@ -366,7 +367,7 @@ ${S}{
   --accent1:#E98B7F; --accent2:#EFAF58;
   --card-bg:${CARD}; --card-border:${INK}; --card-shadow:3px 4px 0 rgba(246,200,180,.5); --card-radius:26px;
   --chip-bg:${BUTTER}; --chip-text:#5A4A42; --danger:#DD6B6B;
-  --font-body:${FONT}; --font-display:${FONT}; --font-script:${FONT};
+  --font-body:${FONT}; --font-display:${FONT_EN}; --font-script:${FONT_EN};
   --track:#FFFEFB; --field:#FFFEFB; --field-f:#FFFEFB;
   --hair:rgba(90,74,66,.3); --hair-2:rgba(90,74,66,.2); --mute:rgba(90,74,66,.3);
   --btn-ink:#4F4039; --btn-ts:none; --on-ink:#4F4039; --on-ts:none;
@@ -911,8 +912,8 @@ ${S} .pup-c-peek{animation:pup-kf-peek 6s ease-in-out infinite}
     desc: '色鉛筆手繪、軟萌療癒',
     themeColor: PAPER,
     fonts: [
-      'https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap',
-      'https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@500;700;900&display=swap'
+      'https://fonts.googleapis.com/css2?family=Iansui&display=swap',
+      'https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap'
     ],
     css: css,
     swatch: swatch,

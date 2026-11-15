@@ -16,7 +16,7 @@ ${S}{
   --card-radius:24px;
   --chip-bg:rgba(255,255,255,.7); --chip-text:#8A7260;
   --danger:#C4747F;
-  --font-body:"Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
+  --font-body:"Noto Serif TC","Songti TC","PingFang TC","Heiti TC","PMingLiU","Noto Serif CJK TC",serif;
   --font-display:"Cormorant Garamond","Cormorant","Hoefler Text","Baskerville","Times New Roman","Noto Serif TC","Songti TC","PMingLiU","Noto Serif CJK TC",serif;
   --font-script:"Great Vibes","Snell Roundhand","Apple Chancery","Cormorant Garamond","Hoefler Text","Baskerville","Times New Roman",serif;
 
@@ -45,6 +45,7 @@ ${S}{
   --bar-bg:rgba(255,248,238,.8); --tabbar-bg:rgba(255,249,241,.95); --sheet-bg:linear-gradient(160deg,rgba(255,252,247,.9),rgba(255,244,236,.82));
   --latin-style:italic; --orn-h:16px;
 }
+${S} .lock-date,${S} .hero-line b,${S} .latin{font-variant-numeric:lining-nums}
 ${S} .bg{background:#FBEBDD}
 ${S} .orb.a{background:radial-gradient(circle,#F3DDB4 0%,rgba(243,221,180,.5) 30%,rgba(243,221,180,0) 70%);opacity:.62}
 ${S} .orb.b{background:radial-gradient(circle,#F3BFC6 0%,rgba(243,191,198,.5) 30%,rgba(243,191,198,0) 70%);opacity:.62}
@@ -171,7 +172,12 @@ ${S} .tabbar{border-top-color:rgba(226,198,150,.5)}
 
   window.WeddingThemes.champagne = {
     id: 'champagne', name: '香檳晨曦', desc: '香檳金與粉霧・花瓣柔光', themeColor: '#FFF8EE',
-    fonts: [], css: css, swatch: swatch, ornament: ornament,
+    fonts: [
+      'https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;500&display=swap',
+      'https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap',
+      'https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap'
+    ],
+    css: css, swatch: swatch, ornament: ornament,
     lockArt: '', cornerMascot: '', headingIcon: '',
     particles: particles, runner: { mount: mount, ground: false }
   };
