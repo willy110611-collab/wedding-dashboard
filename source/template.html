@@ -621,7 +621,7 @@ var particles=(function(){
 
 /* ---------- theme engine ---------- */
 var REG=window.WeddingThemes||{};
-var ORDER=["champagne","earth","white","gold","puppy","quokka"].filter(function(id){return REG[id]});
+var ORDER=["champagne","earth","white","gold","puppy","quokka","lele"].filter(function(id){return REG[id]});
 Object.keys(REG).forEach(function(id){if(ORDER.indexOf(id)<0)ORDER.push(id)});
 var current=null,runner=null,layer=$("mascot-layer");
 function injectTheme(t){
@@ -641,7 +641,7 @@ function killRunner(){if(runner){try{runner.destroy&&runner.destroy()}catch(e){}
 function mountRunner(){
   killRunner();
   var t=REG[current];
-  if(!unlocked||reduce||!t||!t.runner||typeof t.runner.mount!=="function"){layer.hidden=true;return}
+  if(!unlocked||!t||!t.runner||typeof t.runner.mount!=="function"||(reduce&&!t.runner.reducedMotion)){layer.hidden=true;return}
   layer.hidden=false;layer.classList.toggle("ground",t.runner.ground!==false);
   try{runner=t.runner.mount(layer)||null;if(runner&&document.hidden&&runner.pause)runner.pause()}catch(e){runner=null;if(window.console)console.warn("runner failed:",e)}
 }
