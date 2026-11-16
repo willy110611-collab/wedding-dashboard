@@ -1,0 +1,13 @@
+// Cloudflare Worker（wedding-sync）設定：Cloudflare 從這個 repo 自動部署 source/worker.js
+// NOTION_TOKEN、SITE_PASSWORD 是 Secret，只在 Cloudflare 後台設定，不寫在這裡
+{
+  "name": "wedding-sync",
+  "main": "source/worker.js",
+  "compatibility_date": "2026-11-16",
+  "workers_dev": true,
+  "observability": { "enabled": true },
+  "vars": {
+    "ALLOWED_ORIGIN": "https://willy110611-collab.github.io",
+    "TOTAL_BUDGET": "1000000"
+  }
+}
