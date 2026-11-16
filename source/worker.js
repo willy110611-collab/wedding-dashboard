@@ -8,7 +8,7 @@
  *   NOTION_TOKEN   (Secret)  Notion integration 的 Internal Integration Secret
  *   SITE_PASSWORD  (Secret)  跟網站同一組密碼
  *   ALLOWED_ORIGIN (Text)    https://willy110611-collab.github.io
- *   TOTAL_BUDGET   (Text)    總預算，例如 1200000（選填）
+ *   TOTAL_BUDGET   (Text)    總預算，例如 1000000（選填）
  *
  * API：
  *   GET  /data                         → 全部資料（與網站 data.json 同格式，另附 schema）
