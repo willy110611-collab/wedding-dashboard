@@ -356,6 +356,54 @@ details[open] .body{animation:fade .5s ease}
 .sheet-f span{font-size:11.5px;color:var(--ink-3);letter-spacing:.06em}
 .sheet-f button{flex:none;border:0;cursor:pointer;font-size:13px;letter-spacing:.2em;padding:8px 18px;border-radius:999px;color:var(--ink-2);background:var(--field-f);box-shadow:inset 0 0 0 1px var(--mute)}
 
+/* ---------- editing (live Notion sync) ---------- */
+.edit-btn{flex:none;width:30px;height:30px;margin:-4px -6px -4px 0;border:0;border-radius:50%;cursor:pointer;display:none;place-items:center;
+  color:var(--accent-ink);background:transparent;-webkit-tap-highlight-color:transparent;transition:background .2s}
+.edit-btn svg{width:15px;height:15px}
+.edit-btn:hover,.edit-btn:focus-visible{background:var(--field-f);outline:0;box-shadow:inset 0 0 0 1px var(--hair)}
+html.can-edit .edit-btn{display:grid}
+.grow .edit-btn{margin:0 -4px 0 0}
+.grow{grid-template-columns:1fr auto auto auto}
+html:not(.can-edit) .grow{grid-template-columns:1fr auto auto}
+.addbtn{display:none;margin-left:auto;border:0;cursor:pointer;font-size:12.5px;letter-spacing:.16em;padding:6px 14px 6px 12px;border-radius:999px;
+  color:var(--on-ink);background:var(--on);text-shadow:var(--on-ts);font-weight:500;box-shadow:var(--btn-sh);white-space:nowrap}
+html.can-edit .addbtn{display:inline-flex;align-items:center;gap:4px}
+h3.sub.has-add{display:flex;align-items:baseline;gap:8px}
+.add-row{display:flex;justify-content:flex-end;margin:4px 0 10px}
+.sync-pill{display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;font-size:11.5px;letter-spacing:.08em;padding:5px 11px;border-radius:999px;
+  color:var(--ink-2);background:var(--field-f);box-shadow:inset 0 0 0 1px var(--mute);white-space:nowrap;position:absolute;left:10px;bottom:9px}
+.sync-pill[hidden]{display:none}
+.sync-pill i{width:7px;height:7px;border-radius:50%;background:var(--mute);flex:none}
+.sync-pill.live i{background:#7DB88A;box-shadow:0 0 0 3px rgba(125,184,138,.22)}
+.sync-pill.busy i{background:var(--accent1);animation:pulse 1s ease-in-out infinite}
+.sync-pill.off i{background:var(--danger)}
+@keyframes pulse{50%{opacity:.25}}
+.form{display:grid;gap:12px;margin-top:2px}
+.form .f{display:grid;gap:5px}
+.form .f>span{font-size:12px;letter-spacing:.14em;color:var(--ink-2)}
+.form .two-f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form input,.form select,.form textarea{width:100%;border:0;outline:0;border-radius:14px;padding:11px 14px;font-size:15px;color:var(--ink);font-family:inherit;
+  background:var(--field-f);box-shadow:inset 0 0 0 1px var(--hair);-webkit-appearance:none;appearance:none}
+.form select{background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
+  background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
+.form textarea{min-height:92px;resize:vertical;line-height:1.65}
+.form input:focus,.form select:focus,.form textarea:focus{box-shadow:inset 0 0 0 1.5px var(--accent2),0 0 0 4px var(--glow)}
+.form .chk{display:flex;align-items:center;gap:10px;font-size:15px;cursor:pointer}
+.form .chk input{width:22px;height:22px;padding:0;border-radius:7px;flex:none;display:grid;place-items:center}
+.form .chk input:checked{background:var(--on);box-shadow:none}
+.form .chk input:checked::after{content:"";width:6px;height:11px;border:solid #fff;border-width:0 2px 2px 0;transform:translateY(-1px) rotate(45deg)}
+.form-err{min-height:18px;margin:2px 0 0;font-size:12.5px;color:var(--danger);letter-spacing:.04em}
+.form-act{display:flex;gap:10px;align-items:center;margin-top:6px}
+.form-act .btn-primary{margin:0;flex:1;height:48px;letter-spacing:.3em}
+.btn-del{flex:none;height:48px;padding:0 18px;border:0;border-radius:999px;cursor:pointer;font-size:13.5px;letter-spacing:.14em;color:var(--danger);
+  background:var(--field-f);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--danger) 45%,transparent)}
+.btn-del.armed{color:#fff;background:var(--danger);box-shadow:none}
+.toast{position:fixed;left:50%;bottom:calc(var(--tabbar-h) + 22px + env(safe-area-inset-bottom));z-index:60;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  padding:10px 18px;border-radius:999px;font-size:13.5px;letter-spacing:.1em;color:var(--on-ink);background:var(--on);text-shadow:var(--on-ts);box-shadow:var(--btn-sh);
+  transition:opacity .3s,transform .3s;white-space:nowrap}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast.bad{background:var(--danger)}
+
 @media (max-width:359px){.countdown-card .num{font-size:38px}.lock-title{font-size:50px}.tab{letter-spacing:.08em}}
 @media (min-width:760px){
   .lock-card{max-width:460px;padding:52px 44px 40px}.lock-title{font-size:66px;white-space:nowrap}
@@ -383,6 +431,7 @@ details[open] .body{animation:fade .5s ease}
   #app{padding-left:28px;padding-right:28px;padding-bottom:130px}
   .topbar{background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;pointer-events:none}
   .topbar-title{display:none}
+  .sync-pill{pointer-events:auto;left:22px;bottom:auto;top:24px;background:var(--bar-bg);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
   .topbar .gear{pointer-events:auto;right:22px;bottom:auto;top:14px;border-radius:50%;background:var(--bar-bg);box-shadow:inset 0 0 0 1px var(--hair-2);
     -webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
   .tabbar{top:12px;bottom:auto;left:50%;right:auto;transform:translateX(-50%);height:auto;width:auto;display:flex;gap:2px;padding:5px;border-radius:999px;
@@ -427,6 +476,7 @@ details[open] .body{animation:fade .5s ease}
       </g>
     </symbol>
     <symbol id="ix" viewBox="0 0 14 14"><path d="M2 2l10 10M12 2L2 12" fill="none" stroke="currentColor" stroke-width="1.600" stroke-linecap="round"/></symbol>
+    <symbol id="ipen" viewBox="0 0 16 16"><path d="M10.600 2.900l2.500 2.500M3 13l.6-3.100 7.700-7.700c.5-.5 1.300-.5 1.800 0l.7.7c.5.5.5 1.300 0 1.800L6.100 12.400z" fill="none" stroke="currentColor" stroke-width="1.300" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="iok" viewBox="0 0 12 12"><path d="M2.300 6.300l2.500 2.500 5-5.500" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <!-- hand-drawn tab icons -->
     <symbol id="t-overview" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.500" stroke-linecap="round" stroke-linejoin="round">
@@ -466,6 +516,7 @@ details[open] .body{animation:fade .5s ease}
 <!-- ============ app ============ -->
 <div id="app" hidden>
   <header class="topbar">
+    <button class="sync-pill" type="button" id="sync" hidden aria-live="polite"><i></i><span id="syncT">同步中</span></button>
     <span class="topbar-title" id="topTitle">總覽</span>
     <button class="gear" type="button" data-settings aria-label="風格設定"><svg aria-hidden="true"><use href="#gear"/></svg></button>
   </header>
@@ -498,7 +549,7 @@ details[open] .body{animation:fade .5s ease}
   <section class="page" id="page-tasks" data-page="tasks" hidden>
     <div class="head reveal"><span class="latin page-subtitle">To-do</span><h2 class="page-title"><span class="slot heading-icon" data-slot="headingIcon" aria-hidden="true"></span><span class="gt">待辦</span></h2><div class="orn" aria-hidden="true"><span class="slot" data-slot="ornament"></span></div></div>
     <div class="card panel reveal"><div class="grid stagegrid" id="stages" style="gap:0"></div></div>
-    <h3 class="sub reveal">近期待辦 <small id="pendingN"></small></h3>
+    <h3 class="sub reveal has-add">近期待辦 <small id="pendingN"></small><button class="addbtn" type="button" data-add="tasks">＋ 新增</button></h3>
     <div id="pending"></div>
     <h3 class="sub reveal">已定案 <small id="doneN"></small></h3>
     <div class="grid cols2" id="done"></div>
@@ -517,7 +568,7 @@ details[open] .body{animation:fade .5s ease}
         <div class="card panel reveal" id="cats"></div>
       </div>
       <div>
-        <h3 class="sub reveal">明細 <small id="itemsN"></small></h3>
+        <h3 class="sub reveal has-add">明細 <small id="itemsN"></small><button class="addbtn" type="button" data-add="budget">＋ 新增</button></h3>
         <div class="grid" id="items"></div>
       </div>
     </div>
@@ -525,6 +576,7 @@ details[open] .body{animation:fade .5s ease}
 
   <section class="page" id="page-vendors" data-page="vendors" hidden>
     <div class="head reveal"><span class="latin page-subtitle">Vendors</span><h2 class="page-title"><span class="slot heading-icon" data-slot="headingIcon" aria-hidden="true"></span><span class="gt">廠商</span></h2><div class="orn" aria-hidden="true"><span class="slot" data-slot="ornament"></span></div></div>
+    <div class="add-row"><button class="addbtn" type="button" data-add="vendors">＋ 新增廠商</button></div>
     <div id="vbooked"></div>
     <div id="vgroups"></div>
   </section>
@@ -542,7 +594,7 @@ details[open] .body{animation:fade .5s ease}
         <div class="card panel reveal" id="ggroups"></div>
       </div>
     </div>
-    <h3 class="sub reveal">賓客名單 <small id="glistN"></small></h3>
+    <h3 class="sub reveal has-add">賓客名單 <small id="glistN"></small><button class="addbtn" type="button" data-add="guests">＋ 新增</button></h3>
     <div class="card panel reveal">
       <div class="search">
         <input class="search-input" id="gq" type="search" placeholder="搜尋姓名" aria-label="搜尋賓客姓名" autocomplete="off">
@@ -565,9 +617,19 @@ details[open] .body{animation:fade .5s ease}
   <div class="sheet-f"><span>選擇會記在這台裝置上</span><button type="button" id="sheetOut" data-logout hidden>登出</button></div>
 </div>
 
+<!-- ============ edit sheet ============ -->
+<div class="scrim" id="escrim" hidden></div>
+<div class="settings-sheet" id="esheet" role="dialog" aria-modal="true" aria-labelledby="esheetT" hidden>
+  <div class="grab" aria-hidden="true"></div>
+  <div class="sheet-h"><h2 id="esheetT">編輯</h2><button type="button" id="esheetX" aria-label="關閉"><svg aria-hidden="true"><use href="#ix"/></svg></button></div>
+  <form class="form" id="eform" novalidate autocomplete="off"></form>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
 (function(){
 "use strict";
+var API="__API__".replace(/\/+$/,"");
 var ENC={salt:"__SALT__",iv:"__IV__",ct:"__CT__",iter:__ITER__};
 var KEY="wedding-dash-pass",THEME_KEY="wedding-dash-theme",TAB_KEY="wedding-dash-tab";
 var $=function(id){return document.getElementById(id)};
@@ -746,6 +808,7 @@ function unlock(pass,auto){
   decrypt(pass).then(function(data){
     if(auto||$("remember").checked)store.set(pass);else store.del();
     pw.value="";
+    PASS=pass;DATA=data;
     render(data);
     unlocked=true;
     fillSlots(document);
@@ -755,6 +818,7 @@ function unlock(pass,auto){
     setTimeout(function(){$("lock").hidden=true},900);
     startReveal();
     mountRunner();
+    if(API)pull(false);
   }).catch(function(err){
     busy=false;go.disabled=false;go.textContent="開啟";
     if(auto){store.del();return}
@@ -801,6 +865,7 @@ function card(o){
   var head=el(has?"summary":"div");
   var top=el("div","top");top.appendChild(el("span","name",o.name));
   if(o.chips&&o.chips.length){var cs=el("span","chips");o.chips.forEach(function(c){cs.appendChild(c)});top.appendChild(cs)}
+  if(o.edit)top.appendChild(editBtn(o.edit[0],o.edit[1],o.name));
   head.appendChild(top);
   var meta=el("div","meta");(o.meta||[]).forEach(function(m){if(m)meta.appendChild(m)});
   if(has)meta.appendChild(el("span","more",o.more||"詳情"));
@@ -811,8 +876,12 @@ function card(o){
 }
 
 /* ---------- render ---------- */
+var BOXES=["tiles","stages","pending","done","bsum","meter","balert","cats","items","vbooked","vgroups","gtot","gsplit","ggroups","glist","gchips"];
 function render(D){
-  var meta=D.meta||{},T=D.tasks||[],B=D.budget||[],V=D.vendors||[],G=D.guests||[];
+  BOXES.forEach(function(id){var b=$(id);while(b.firstChild)b.removeChild(b.firstChild)});
+  ["gq","gmore"].forEach(function(id){var o=$(id),n=o.cloneNode(true);o.parentNode.replaceChild(n,o)});
+  var meta=D.meta||{},T=D.tasks||[],B=D.budget||[],V=D.vendors||[],
+      G=(D.guests||[]).map(function(g){return Array.isArray(g)?{n:g[0],g:g[1],s:g[2],c:g[3],v:g[4]}:g});
   var total=Number(meta.totalBudget)||0;
 
   /* overview */
@@ -820,7 +889,7 @@ function render(D){
   $("snap").textContent="資料更新於 "+(meta.snapshot||"—");
   startCountdown(meta.date);
   var doneT=T.filter(function(t){return t.s==="完成"}),est=sum(B,function(b){return b.e}),act=sum(B,function(b){return b.a});
-  var going=G.filter(function(g){return g[2]!=="不克出席"}),invited=sum(going,function(g){return g[3]});
+  var going=G.filter(function(g){return g.s!=="不克出席"}),invited=sum(going,function(g){return g.c});
   var tiles=$("tiles");
   function tile(lab,vis,val,tab){
     var t=el("a","card stat-tile reveal");t.href="#"+tab;t.setAttribute("aria-label",lab+"，前往"+TITLES[tab]);
@@ -852,7 +921,7 @@ function render(D){
     var m=[];
     if(t.d){var dd=el("span");add(dd,"期限 ",el("span","num",fmtDate(t.d)));m.push(dd)}
     if(showStage&&t.st)m.push(el("span",null,String(t.st).split(/[:：]/)[0]));
-    return card({name:t.n,chips:chips,meta:m,body:t.todo,more:"待辦事項"});
+    return card({name:t.n,chips:chips,meta:m,body:t.todo,more:"待辦事項",edit:["tasks",t]});
   }
   var dated=pend.filter(function(t){return t.d}).sort(function(a,b){return String(a.d)<String(b.d)?-1:String(a.d)>String(b.d)?1:0});
   var P=$("pending");
@@ -876,6 +945,7 @@ function render(D){
     var c=el("div","card soft item done reveal"),top=el("div","top");
     top.appendChild(el("span","name",t.n));
     if(t.d)top.appendChild(el("span","num muted",fmtDate(t.d)));
+    top.appendChild(editBtn("tasks",t,t.n));
     c.appendChild(top);c.appendChild(el("div","body",t.c&&String(t.c).trim()?t.c:"已完成"));
     $("done").appendChild(c);
   });
@@ -918,7 +988,7 @@ function render(D){
     var m=[],e=el("span");add(e,"預估 ",el("span","num",nf(b.e)));m.push(e);
     if(b.a!=null){var a=el("span");add(a,"已付 ",el("span","num",nf(b.a)));m.push(a)}
     m.push(el("span",null,[b.cat,b.who].filter(Boolean).join("・")));
-    $("items").appendChild(card({name:b.n,chips:chips,meta:m,body:b.note,more:"備註"}));
+    $("items").appendChild(card({name:b.n,chips:chips,meta:m,body:b.note,more:"備註",edit:["budget",b]}));
   });
 
   /* vendors */
@@ -928,7 +998,9 @@ function render(D){
     var m=[];if(booked)m.push(el("span",null,v.t));
     var u=safeUrl(v.u);
     if(u){var a=el("a","link","前往連結 ↗");a.href=u;a.target="_blank";a.rel="noopener noreferrer";m.push(a)}
-    return card({name:v.n,chips:[chip(String(v.s||"").replace(/^[^一-鿿A-Za-z]+/,"")||"—",vKind[v.s]||"")],meta:m,body:v.note,more:"筆記",cls:isOut(v)?"dim":""});
+    var body=[["報價",v.q],["聯絡",v.ct],["檔期",v.sch],["筆記",v.note]].filter(function(x){return x[1]&&String(x[1]).trim()});
+    body=body.length>1||(body.length===1&&body[0][0]!=="筆記")?body.map(function(x){return"【"+x[0]+"】\n"+x[1]}).join("\n\n"):(body[0]?body[0][1]:null);
+    return card({name:v.n,chips:[chip(String(v.s||"").replace(/^[^一-鿿A-Za-z]+/,"")||"—",vKind[v.s]||"")],meta:m,body:body,more:"筆記",cls:isOut(v)?"dim":"",edit:["vendors",v]});
   }
   var booked=V.filter(function(v){return v.s==="已付訂金"});
   if(booked.length){
@@ -946,11 +1018,11 @@ function render(D){
     });
 
   /* guests */
-  function side(g){var s=String(g[1]||"");return s.indexOf("男方")===0?"男方":s.indexOf("女方")===0?"女方":"共同"}
+  function side(g){var s=String(g.g||"");return s.indexOf("男方")===0?"男方":s.indexOf("女方")===0?"女方":"共同"}
   var sideCls={"男方":"m","女方":"f","共同":"c"};
-  var cnt=function(g){return g[3]},yes=G.filter(function(g){return g[2]==="確定出席"}),no=G.filter(function(g){return g[2]==="不克出席"}),
-      wait=G.filter(function(g){return g[2]!=="確定出席"&&g[2]!=="不克出席"});
-  [["邀請總人數",invited],["確定出席",sum(yes,cnt)],["未回覆",sum(wait,cnt)],["不克出席",sum(no,cnt)],["素食",sum(going,function(g){return g[4]})]].forEach(function(x,i){
+  var cnt=function(g){return g.c},yes=G.filter(function(g){return g.s==="確定出席"}),no=G.filter(function(g){return g.s==="不克出席"}),
+      wait=G.filter(function(g){return g.s!=="確定出席"&&g.s!=="不克出席"});
+  [["邀請總人數",invited],["確定出席",sum(yes,cnt)],["未回覆",sum(wait,cnt)],["不克出席",sum(no,cnt)],["素食",sum(going,function(g){return g.v})]].forEach(function(x,i){
     var c=el("div","card soft");c.appendChild(el("span","num"+(i<2?" gt":""),x[1]));c.appendChild(el("div","lab",x[0]));$("gtot").appendChild(c);
   });
   var sides=["男方","女方","共同"].map(function(s){return{n:s,v:sum(going.filter(function(g){return side(g)===s}),cnt)}});
@@ -961,7 +1033,7 @@ function render(D){
   });
   add($("gsplit"),sp,sl);
   var note=el("p","tiny","以邀請人數計，不含不克出席");note.style.margin="12px 0 0";$("gsplit").appendChild(note);
-  var groups=groupBy(going,function(g){return g[1]||"未分組"}).map(function(x){return{n:x[0],v:sum(x[1],cnt),s:side(x[1][0])}}).sort(function(a,b){return b.v-a.v}),
+  var groups=groupBy(going,function(g){return g.g||"未分組"}).map(function(x){return{n:x[0],v:sum(x[1],cnt),s:side(x[1][0])}}).sort(function(a,b){return b.v-a.v}),
       gmax=Math.max.apply(null,groups.map(function(g){return g.v}).concat([1]));
   groups.forEach(function(g){
     var r=el("div","brow"),v=el("div","v");add(v,el("span","num",g.v)," 人");
@@ -970,11 +1042,11 @@ function render(D){
   /* guest list */
   var gKind={"確定出席":"gold","不克出席":"rose"},LIMIT=24,state={q:"",side:"全部",all:false};
   var rows=G.map(function(g){
-    var r=el("div","grow"),n=el("div","n",g[0]);n.appendChild(el("span","g",g[1]||""));
-    var c=el("div","cnt");add(c,el("span","num",g[3])," 位"+(g[4]>0?"・素 "+g[4]:""));
-    var st=g[2]==="確定出席"||g[2]==="不克出席"?g[2]:"未回覆";
-    add(r,n,c,chip(st,gKind[st]||""));
-    return{el:r,name:String(g[0]||"").toLowerCase(),side:side(g)};
+    var r=el("div","grow"),n=el("div","n",g.n);n.appendChild(el("span","g",g.g||""));
+    var c=el("div","cnt");add(c,el("span","num",g.c||0)," 位"+(g.v>0?"・素 "+g.v:""));
+    var st=g.s==="確定出席"||g.s==="不克出席"?g.s:"未回覆";
+    add(r,n,c,chip(st,gKind[st]||""),editBtn("guests",g,g.n));
+    return{el:r,name:String(g.n||"").toLowerCase(),side:side(g)};
   });
   var list=$("glist");rows.forEach(function(r){list.appendChild(r.el)});
   function apply(){
@@ -1002,6 +1074,132 @@ function render(D){
   apply();
 }
 
+/* ---------- live sync with Notion (through the Worker) ---------- */
+var PASS=null,DATA=null,LIVE=false,lastPull=0,pulling=false;
+var KIND_T={tasks:"待辦",budget:"預算",vendors:"廠商",guests:"賓客"};
+function api(path,body){
+  return fetch(API+path,{method:body?"POST":"GET",headers:body?{"Content-Type":"application/json","X-Pass":PASS}:{"X-Pass":PASS},
+    body:body?JSON.stringify(body):undefined,cache:"no-store"})
+    .then(function(r){return r.json().catch(function(){return{}}).then(function(j){if(!r.ok)throw new Error(j.error||("HTTP "+r.status));return j})});
+}
+function syncState(k,t){var b=$("sync");b.hidden=false;b.className="sync-pill "+k;$("syncT").textContent=t}
+function rerender(){
+  var tab=curTab,y=window.scrollY,open=qsa("details[open]").map(function(d){var n=d.querySelector(".name");return n&&n.textContent});
+  render(DATA);fillSlots(document);
+  qsa("details").forEach(function(d){var n=d.querySelector(".name");if(n&&open.indexOf(n.textContent)>=0)d.open=true});
+  qsa("#app .reveal").forEach(function(e){e.classList.add("in")});fill(document);
+  curTab=null;showTab(tab);window.scrollTo(0,y);
+}
+function pull(quiet){
+  if(!API||!PASS||pulling)return;pulling=true;
+  if(!quiet)syncState("busy","同步中");
+  api("/data").then(function(d){
+    DATA=d;LIVE=true;lastPull=Date.now();html.classList.add("can-edit");
+    rerender();syncState("live","已與 Notion 同步");
+  }).catch(function(e){
+    if(window.console)console.warn("sync failed:",e);
+    syncState("off",LIVE?"同步失敗，點我重試":"離線快照・點我重試");
+  }).then(function(){pulling=false});
+}
+$("sync").addEventListener("click",function(){pull(false)});
+document.addEventListener("visibilitychange",function(){if(!document.hidden&&LIVE&&Date.now()-lastPull>60000)pull(true)});
+
+var toastT=0;
+function toast(t,bad){var x=$("toast");x.textContent=t;x.classList.toggle("bad",!!bad);x.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){x.classList.remove("show")},2600)}
+
+function editBtn(kind,item,name){
+  var b=el("button","edit-btn");b.type="button";b.setAttribute("aria-label","編輯「"+(name||"")+"」");
+  b.innerHTML='<svg aria-hidden="true"><use href="#ipen"/></svg>';
+  b.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();openEdit(kind,item,b)});
+  return b;
+}
+document.addEventListener("click",function(e){var a=e.target.closest&&e.target.closest("[data-add]");if(a)openEdit(a.getAttribute("data-add"),null,a)});
+
+/* edit sheet */
+var esheet=$("esheet"),escrim=$("escrim"),eform=$("eform"),eFrom=null,eT=0,eCtx=null;
+function closeEdit(){
+  esheet.classList.remove("open");escrim.classList.remove("open");
+  clearTimeout(eT);eT=setTimeout(function(){esheet.hidden=true;escrim.hidden=true},reduce?0:420);
+  if(eFrom&&eFrom.focus&&document.contains(eFrom))try{eFrom.focus({preventScroll:true})}catch(e){}
+  eCtx=null;
+}
+escrim.addEventListener("click",closeEdit);$("esheetX").addEventListener("click",closeEdit);
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!esheet.hidden)closeEdit()});
+var PAIR={tasks:[["s","st"],["d","who"],["cat","elder"]],budget:[["e","a"],["s","who"],["cat","pd"]],vendors:[["t","s"]],guests:[["g","s"],["c","v"],["tb","amt"]]};
+function field(f,val,idx){
+  var w=el("label","f"),id="ef-"+f.key,inp;
+  if(f.t==="checkbox"){
+    w.className="chk";inp=el("input");inp.type="checkbox";inp.checked=!!val;add(w,inp,f.label);
+  }else{
+    w.appendChild(el("span",null,f.label));
+    if(f.t==="rich_text"){inp=el("textarea");inp.rows=String(val||"").split("\n").length>3?6:3}
+    else if(f.t==="status"){
+      inp=el("select");(f.options||[]).forEach(function(o){var op=el("option",null,o);op.value=o;inp.appendChild(op)});
+      if(val&&(f.options||[]).indexOf(val)<0){var op=el("option",null,val);op.value=val;inp.appendChild(op)}
+    }
+    else if(f.t==="select"){
+      inp=el("input");inp.setAttribute("list",id+"-l");inp.placeholder="選擇或輸入";
+      var dl=el("datalist");dl.id=id+"-l";(f.options||[]).forEach(function(o){var op=el("option");op.value=o;dl.appendChild(op)});w.appendChild(dl);
+    }
+    else{inp=el("input");inp.type=f.t==="number"?"number":f.t==="date"?"date":f.t==="url"?"url":"text";if(f.t==="number"){inp.inputMode="decimal";inp.step="any"}}
+    if(f.t!=="status")inp.value=val==null?"":f.t==="date"?String(val).slice(0,10):String(val);
+    else inp.value=val||(f.options||[])[0]||"";
+    w.appendChild(inp);
+  }
+  inp.id=id;inp.name=f.key;if(f.t==="title")inp.required=true;
+  return w;
+}
+function openEdit(kind,item,from){
+  if(!LIVE){toast("還沒連上 Notion，先按左上角重試",true);return}
+  var sc=DATA.schema&&DATA.schema[kind];if(!sc)return;
+  eCtx={kind:kind,item:item};eFrom=from||null;
+  $("esheetT").textContent=(item?"編輯":"新增")+KIND_T[kind];
+  while(eform.firstChild)eform.removeChild(eform.firstChild);
+  var F={};sc.fields.forEach(function(f){F[f.key]=f});
+  var done={},pairs=PAIR[kind]||[];
+  sc.fields.forEach(function(f){
+    if(done[f.key])return;
+    var pr=pairs.filter(function(p){return p[0]===f.key})[0];
+    if(pr&&F[pr[1]]&&!done[pr[1]]){
+      var row=el("div","two-f");pr.forEach(function(k){done[k]=1;row.appendChild(field(F[k],item?item[k]:null))});eform.appendChild(row);
+    }else{done[f.key]=1;eform.appendChild(field(f,item?item[f.key]:null))}
+  });
+  eform.appendChild(el("p","form-err"));
+  var act=el("div","form-act"),save=el("button","btn btn-primary","儲存");save.type="submit";
+  if(item){var del=el("button","btn-del","刪除");del.type="button";del.addEventListener("click",function(){
+    if(!del.classList.contains("armed")){del.classList.add("armed");del.textContent="確定刪除？";return}
+    busy(true);api("/delete",{kind:kind,id:item.id}).then(function(){
+      DATA[kind]=DATA[kind].filter(function(x){return x.id!==item.id});rerender();closeEdit();toast("已刪除（Notion 垃圾桶可復原）");
+    }).catch(fail);
+  });act.appendChild(del)}
+  act.appendChild(save);eform.appendChild(act);
+  clearTimeout(eT);esheet.hidden=false;escrim.hidden=false;esheet.scrollTop=0;void esheet.offsetWidth;
+  esheet.classList.add("open");escrim.classList.add("open");
+  if(!item){var t=eform.querySelector("[required]");if(t)setTimeout(function(){t.focus({preventScroll:true})},420)}
+  function busy(on){qsa("button,input,select,textarea",eform).forEach(function(x){x.disabled=on});save.textContent=on?"同步中…":"儲存"}
+  function fail(e){busy(false);eform.querySelector(".form-err").textContent="沒有存成功："+(e&&e.message||e)}
+  eform.onsubmit=function(ev){
+    ev.preventDefault();
+    var out={},changed=0;
+    sc.fields.forEach(function(f){
+      var x=eform.elements[f.key];if(!x)return;
+      var v=f.t==="checkbox"?x.checked:x.value.trim();
+      if(f.t==="number"&&v!=="")v=Number(v);
+      var old=item?item[f.key]:undefined;
+      if(f.t==="checkbox"?(!!old!==v):(String(old==null?"":f.t==="date"?String(old).slice(0,10):old)!==String(v))){out[f.key]=v;changed++}
+    });
+    var title=sc.fields.filter(function(f){return f.t==="title"})[0];
+    if(title&&!eform.elements[title.key].value.trim()){eform.querySelector(".form-err").textContent="請填寫「"+title.label+"」";eform.elements[title.key].focus();return}
+    if(!changed){closeEdit();return}
+    busy(true);
+    api("/save",{kind:kind,id:item?item.id:null,fields:out}).then(function(r){
+      var list=DATA[kind]=DATA[kind]||[],i=item?list.map(function(x){return x.id}).indexOf(item.id):-1;
+      if(i>=0)list[i]=r.item;else list.push(r.item);
+      rerender();closeEdit();toast(item?"已更新到 Notion":"已新增到 Notion");
+    }).catch(fail);
+  };
+}
+
 /* ---------- countdown ---------- */
 function startCountdown(iso){
   var target=new Date(iso).getTime();if(isNaN(target))return;
@@ -1012,7 +1210,7 @@ function startCountdown(iso){
     $("cd").textContent=Math.floor(s/86400);$("ch").textContent=p(Math.floor(s%86400/3600));
     $("cm").textContent=p(Math.floor(s%3600/60));$("cs").textContent=p(s%60);
   }
-  tick();setInterval(tick,1000);
+  tick();clearInterval(startCountdown.t);startCountdown.t=setInterval(tick,1000);
 }
 
 /* ---------- reveal on first view (per page) ---------- */

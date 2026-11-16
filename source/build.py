@@ -22,8 +22,10 @@ THEMES_TOKEN = "/*__THEMES__*/"
 
 
 def main() -> int:
-    pw_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / ".password"
-    password = pw_path.read_text(encoding="utf-8").strip()
+    password = os.environ.get("SITE_PASSWORD", "").strip()
+    if not password:
+        pw_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / ".password"
+        password = pw_path.read_text(encoding="utf-8").strip()
     if not password:
         print("password file is empty", file=sys.stderr)
         return 1
@@ -54,8 +56,15 @@ def main() -> int:
         print(f"template.html must contain {THEMES_TOKEN} exactly once", file=sys.stderr)
         return 1
     html = html.replace(THEMES_TOKEN, themes_js)
+    # Worker 網址（不是祕密）：環境變數 WORKER_URL，或 source/.api 檔；沒設定就只有唯讀快照
+    api = os.environ.get("WORKER_URL", "").strip()
+    if not api and (ROOT / ".api").exists():
+        api = (ROOT / ".api").read_text(encoding="utf-8").strip()
+    if api and not api.startswith("https://"):
+        print("WORKER_URL must start with https://", file=sys.stderr)
+        return 1
     for token, value in (("__SALT__", b64(salt)), ("__IV__", b64(iv)), ("__CT__", b64(ciphertext)),
-                         ("__ITER__", str(ITERATIONS))):
+                         ("__ITER__", str(ITERATIONS)), ("__API__", api.replace('"', ""))):
         if html.count(token) != 1:
             print(f"template.html must contain {token} exactly once", file=sys.stderr)
             return 1
@@ -66,6 +75,7 @@ def main() -> int:
     (dist / "index.html").write_text(html, encoding="utf-8")
     (dist / ".nojekyll").write_text("", encoding="utf-8")
     print(f"themes: {', '.join(f.stem for f in theme_files)}")
+    print(f"live editing: {api or 'off (no WORKER_URL)'}")
     print(f"built dist/index.html ({len(html.encode('utf-8')):,} bytes, {len(plaintext):,} bytes encrypted)")
     return 0
 

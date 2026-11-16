@@ -1,0 +1,6 @@
+data.json
+.password
+.api
+__pycache__/
+shots/
+dist/

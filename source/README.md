@@ -27,13 +27,28 @@
 - 系統開啟「減少動態效果」時，粒子、吉祥物與轉場都會停用。
 - 要新增或調整風格，改 `themes/<id>.js`（設定 CSS 變數、插圖、粒子與吉祥物），再重新打包即可。
 
+## 在網站上編輯（與 Notion 雙向同步）
+
+```
+網站 ──(密碼)──▶ Cloudflare Worker（worker.js，存 Notion 金鑰）──▶ Notion 四個資料庫
+```
+
+- 解鎖後網站先顯示加密快照，接著透過 Worker 讀 Notion 最新資料；左上角膠囊顯示「已與 Notion 同步」。點它可手動重新同步，切回這個分頁超過 1 分鐘也會自動同步。
+- 每張卡片右上的筆可編輯全部欄位，各分頁的「＋ 新增」可新增，表單裡可刪除（移到 Notion 垃圾桶，可復原）。
+- `.github/workflows/sync.yml` 每 6 小時透過 Worker 抓資料、重新加密 `index.html`（離線快照），資料沒變就不 commit；也可在 Actions 手動 Run。
+- 需要的設定：
+  - Cloudflare Worker：貼上 `worker.js`，設定 `NOTION_TOKEN`、`SITE_PASSWORD`（Secret）、`ALLOWED_ORIGIN`、`TOTAL_BUDGET`。
+  - Notion：建立 internal integration，並在「婚前準備」頁面的 Connections 加入它。
+  - GitHub repo Secrets：`WORKER_URL`、`SITE_PASSWORD`。
+- 欄位對應寫在 `worker.js` 的 `KINDS`；Notion 欄位改名時要一起改。
+
 ## 重新打包
 
 資料或密碼有更新時：
 
 ```bash
 pip install cryptography   # 第一次才需要
-python3 build.py           # 預設讀取 .password；也可以 python3 build.py 其他密碼檔
+python3 build.py           # 密碼讀 SITE_PASSWORD 環境變數或 .password；Worker 網址讀 WORKER_URL 或 .api
 ```
 
 ## 注意
