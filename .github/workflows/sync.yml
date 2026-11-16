@@ -36,7 +36,15 @@ jobs:
       - name: 資料有變才重新加密打包
         working-directory: source
         run: |
-          NEW=$(python3 -c "import json,hashlib;d=json.load(open('data.json'));d['meta'].pop('snapshot',None);print(hashlib.sha256(json.dumps(d,sort_keys=True,ensure_ascii=False).encode()).hexdigest())")
+          # 資料或網頁樣板有變才重建（Notion 圖片網址每次都會換，不列入比較）
+          NEW=$(python3 -c "
+          import json,hashlib,glob
+          d=json.load(open('data.json'));d['meta'].pop('snapshot',None)
+          for k in ('tasks','budget','vendors','guests'):
+              for x in d.get(k,[]): x.pop('ic',None)
+          h=hashlib.sha256(json.dumps(d,sort_keys=True,ensure_ascii=False).encode())
+          for f in sorted(['template.html','build.py']+glob.glob('themes/*.js')): h.update(open(f,'rb').read())
+          print(h.hexdigest())")
           OLD=$(cat .snapshot-hash 2>/dev/null || true)
           if [ "$NEW" != "$OLD" ]; then
             python3 build.py

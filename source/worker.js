@@ -186,7 +186,11 @@ function schemaOf(K, src) {
   const fields = Object.entries(K.fields).map(([key, f]) => {
     const p = props[f.p] || {};
     const opts = (p.select && p.select.options) || (p.status && p.status.options) || null;
-    return { key, label: f.label, t: f.t, options: opts ? opts.map((o) => o.name) : undefined };
+    return {
+      key, label: f.label, t: f.t,
+      options: opts ? opts.map((o) => o.name) : undefined,
+      colors: opts ? Object.fromEntries(opts.map((o) => [o.name, o.color || "default"])) : undefined,
+    };
   });
   return { fields };
 }
@@ -194,13 +198,24 @@ function schemaOf(K, src) {
 function fromPage(K, page) {
   const o = { id: page.id };
   const props = page.properties || {};
+  const ic = page.icon;
+  if (ic) {
+    if (ic.type === "emoji") o.ic = "emoji:" + ic.emoji;
+    else if (ic.type === "external" && ic.external) o.ic = ic.external.url;
+    else if (ic.type === "file" && ic.file) o.ic = ic.file.url;
+  }
   for (const [key, f] of Object.entries(K.fields)) {
     const p = props[f.p];
     if (!p) continue;
     let v = null;
     switch (f.t) {
       case "title": v = plain(p.title); break;
-      case "rich_text": v = plain(p.rich_text); break;
+      case "rich_text": {
+        v = plain(p.rich_text);
+        const segs = styled(p.rich_text);
+        if (segs) (o._rt = o._rt || {})[key] = segs;
+        break;
+      }
       case "number": v = p.number; break;
       case "select": v = p.select ? p.select.name : null; break;
       case "status": v = p.status ? p.status.name : null; break;
@@ -213,6 +228,23 @@ function fromPage(K, page) {
   return o;
 }
 const plain = (arr) => (arr || []).map((t) => t.plain_text || "").join("");
+/* 有粗體、顏色、連結等格式時，回傳分段資料讓網站照 Notion 的樣子顯示；純文字就回 null */
+function styled(arr) {
+  let any = false;
+  const segs = (arr || []).map((t) => {
+    const a = t.annotations || {}, g = { t: t.plain_text || "" };
+    if (a.bold) g.b = 1;
+    if (a.italic) g.i = 1;
+    if (a.strikethrough) g.s = 1;
+    if (a.underline) g.u = 1;
+    if (a.code) g.c = 1;
+    if (a.color && a.color !== "default") g.k = a.color;
+    if (t.href) g.h = t.href;
+    if (Object.keys(g).length > 1) any = true;
+    return g;
+  });
+  return any ? segs : null;
+}
 
 function toProps(K, fields) {
   const props = {};

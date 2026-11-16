@@ -2,7 +2,7 @@
 <html lang="zh-Hant-TW" data-theme="champagne">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#FFF8EE" id="themeColor">
 <title>Our Wedding · 2027.10.10</title>
@@ -104,7 +104,7 @@ html.theming *,html.theming *::before,html.theming *::after{transition:backgroun
 .card{position:relative;border-radius:var(--card-radius);background:var(--card-bg);border:1px solid var(--card-border);
   -webkit-backdrop-filter:var(--blur);backdrop-filter:var(--blur);box-shadow:var(--card-shadow)}
 .card.soft{background:var(--soft-bg);border-radius:var(--soft-radius);box-shadow:var(--soft-shadow);-webkit-backdrop-filter:none;backdrop-filter:none}
-.gt{background:var(--grad-text);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
+.gt{padding-right:.12em;margin-right:-.12em;background:var(--grad-text);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;color:transparent;animation:shimmer 9s ease-in-out infinite}
 @keyframes shimmer{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
 .script{font-family:var(--font-script);font-weight:var(--script-w);font-style:var(--script-style);font-synthesis:none;line-height:1.2}
@@ -255,9 +255,43 @@ html:root .chip.mist{color:var(--c-mist-ink);background:var(--c-mist-bg)}
 .item{padding:13px 15px}
 .item summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:0}
 .item summary::-webkit-details-marker{display:none}
-.item .top{display:flex;align-items:flex-start;gap:8px;justify-content:space-between}
+.item .top{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:start;gap:8px}
+.item .top.has-logo{grid-template-columns:auto minmax(0,1fr) auto auto}
+.item .top>.edit-btn{margin:-4px -6px -4px 0}
+html:not(.can-edit) .item .top{grid-template-columns:minmax(0,1fr) auto}
+html:not(.can-edit) .item .top.has-logo{grid-template-columns:auto minmax(0,1fr) auto}
+.logo{width:22px;height:22px;border-radius:6px;flex:none;display:grid;place-items:center;overflow:hidden;margin-top:1px;
+  background:#fff;box-shadow:0 0 0 1px var(--hair-2),0 4px 10px -6px color-mix(in srgb,var(--text) 50%,transparent);font-size:15px;font-weight:500;color:var(--ink-2)}
+.logo img{width:100%;height:100%;object-fit:cover;display:block}
+.logo img.fav{width:16px;height:16px;object-fit:contain}
+.logo.mono{color:#fff;font-size:11px;letter-spacing:0;line-height:1}
+.logo.emoji{background:none;box-shadow:none;font-size:17px}
+@supports (-webkit-touch-callout:none){input,select,textarea{font-size:16px!important}}
+.item.dim .logo{filter:grayscale(1)}
+.item .top.has-logo+.meta{padding-left:30px}
+.item .logo+.name{align-self:center}
 .item .name{font-weight:500;font-size:15px;letter-spacing:.04em;min-width:0;overflow-wrap:anywhere}
-.item .chips{display:flex;gap:5px;flex:none;flex-wrap:wrap;justify-content:flex-end;max-width:58%}
+.item .chips{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;justify-self:end;max-width:none}
+/* Notion option colors */
+html:root .chip.n{box-shadow:none;font-weight:500}
+html:root .n-default{background:rgba(227,226,224,.7);color:#5A5752}
+html:root .n-gray{background:#E3E2E0;color:#32302C}html:root .n-brown{background:#EEE0DA;color:#5C3B23}
+html:root .n-orange{background:#FADEC9;color:#7A3F12}html:root .n-yellow{background:#FDECC8;color:#6B4B10}
+html:root .n-green{background:#DBEDDB;color:#1F5A36}html:root .n-blue{background:#D3E5EF;color:#1E4E70}
+html:root .n-purple{background:#E8DEEE;color:#5A2F7A}html:root .n-pink{background:#F5E0E9;color:#7A2D55}
+html:root .n-red{background:#FFE2DD;color:#8C2620}
+/* Notion rich text */
+.rt b{font-weight:600}.rt i{font-style:italic}.rt s{text-decoration:line-through}.rt u{text-decoration:underline}
+.rt code{font-family:ui-monospace,Menlo,monospace;font-size:.88em;padding:1px 5px;border-radius:5px;background:rgba(135,131,120,.15);color:#C4554D}
+.rt a{color:var(--accent-ink)}
+.rt .c-gray{color:#787774}.rt .c-brown{color:#9F6B53}.rt .c-orange{color:#D9730D}.rt .c-yellow{color:#CB912F}.rt .c-green{color:#448361}
+.rt .c-blue{color:#337EA9}.rt .c-purple{color:#9065B0}.rt .c-pink{color:#C14C8A}.rt .c-red{color:#D44C47}
+.rt .bg-gray{background:#F1F1EF}.rt .bg-brown{background:#F4EEEE}.rt .bg-orange{background:#FBECDD}.rt .bg-yellow{background:#FBF3DB}.rt .bg-green{background:#EDF3EC}
+.rt .bg-blue{background:#E7F3F8}.rt .bg-purple{background:rgba(244,240,247,.9)}.rt .bg-pink{background:rgba(249,238,243,.9)}.rt .bg-red{background:#FDEBEC}
+.rt [class*="bg-"]{border-radius:3px;padding:0 2px}
+.blabel{display:block;margin:12px 0 2px;font-size:12px;font-weight:600;letter-spacing:.18em;color:var(--accent-ink)}
+.blabel:first-child{margin-top:0}
+.form .rt-warn{font-size:11.5px;color:var(--ink-3);letter-spacing:.04em}
 .item .meta{display:flex;flex-wrap:wrap;gap:3px 12px;margin-top:5px;font-size:12.5px;color:var(--ink-2);align-items:baseline}
 .item .meta .num{font-size:15px}
 .item .more{margin-left:auto;font-size:12px;color:var(--accent-ink);letter-spacing:.1em;display:inline-flex;align-items:center;gap:4px}
@@ -278,7 +312,7 @@ details[open] .body{animation:fade .5s ease}
 .sum{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sum .soft{padding:14px 12px 12px;min-width:0}
 .sum .lab{font-size:12.5px;letter-spacing:.2em;color:var(--ink-2)}
-.sum .num{display:block;font-size:clamp(19px,6vw,26px);line-height:1.25;white-space:nowrap}
+.sum .num{display:block;font-size:clamp(17px,5.4vw,26px);line-height:1.25;white-space:nowrap}
 .sum .num small{font-size:.5em;letter-spacing:.08em;margin-right:3px;font-style:var(--latin-style);-webkit-text-fill-color:var(--ink-3)}
 .neg .num{color:var(--danger)}
 .alert{margin-top:12px;padding:11px 15px;font-size:13.5px;border-radius:16px;color:var(--alert-ink);background:var(--alert-bg);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--danger) 40%,transparent)}
@@ -310,7 +344,7 @@ details[open] .body{animation:fade .5s ease}
 .dot{width:9px;height:9px;border-radius:50%;display:inline-block;align-self:center}
 .dot.m{background:var(--d-m)}.dot.f{background:var(--d-f)}.dot.c{background:var(--d-c)}
 .search{display:flex;flex-direction:column;gap:10px;margin-bottom:12px}
-.search-input{height:46px;width:100%;border:0;outline:0;border-radius:999px;padding:0 20px;font-size:15px;background:var(--field);box-shadow:inset 0 0 0 1px var(--hair)}
+.search-input{height:46px;width:100%;border:0;outline:0;border-radius:999px;padding:0 20px;font-size:16px;background:var(--field);box-shadow:inset 0 0 0 1px var(--hair)}
 .search-input:focus{box-shadow:inset 0 0 0 1.5px var(--accent2),0 0 0 5px var(--glow)}
 .search-input::placeholder{color:var(--ink-3);letter-spacing:.1em}
 .fchips{display:flex;gap:6px;flex-wrap:wrap}
@@ -382,7 +416,7 @@ h3.sub.has-add{display:flex;align-items:baseline;gap:8px}
 .form .f{display:grid;gap:5px}
 .form .f>span{font-size:12px;letter-spacing:.14em;color:var(--ink-2)}
 .form .two-f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.form input,.form select,.form textarea{width:100%;border:0;outline:0;border-radius:14px;padding:11px 14px;font-size:15px;color:var(--ink);font-family:inherit;
+.form input,.form select,.form textarea{width:100%;border:0;outline:0;border-radius:14px;padding:11px 14px;font-size:16px;color:var(--ink);font-family:inherit;
   background:var(--field-f);box-shadow:inset 0 0 0 1px var(--hair);-webkit-appearance:none;appearance:none}
 .form select{background-image:linear-gradient(45deg,transparent 50%,var(--ink-2) 50%),linear-gradient(135deg,var(--ink-2) 50%,transparent 50%);
   background-position:calc(100% - 18px) 52%,calc(100% - 13px) 52%;background-size:5px 5px;background-repeat:no-repeat;padding-right:34px}
@@ -860,10 +894,10 @@ function groupBy(a,f){var m=[],ix={};a.forEach(function(x){var k=f(x);if(!(k in 
 function safeUrl(u){return typeof u==="string"&&/^https?:\/\//i.test(u)?u:null}
 /* expandable card: summary row + optional body text */
 function card(o){
-  var has=o.body!=null&&String(o.body).trim()!=="";
+  var has=o.body!=null&&(o.body.nodeType?o.body.childNodes.length>0:String(o.body).trim()!=="");
   var root=el(has?"details":"div","card soft item reveal"+(o.cls?" "+o.cls:""));
   var head=el(has?"summary":"div");
-  var top=el("div","top");top.appendChild(el("span","name",o.name));
+  var top=el("div","top"+(o.logo?" has-logo":""));if(o.logo)top.appendChild(o.logo);top.appendChild(el("span","name",o.name));
   if(o.chips&&o.chips.length){var cs=el("span","chips");o.chips.forEach(function(c){cs.appendChild(c)});top.appendChild(cs)}
   if(o.edit)top.appendChild(editBtn(o.edit[0],o.edit[1],o.name));
   head.appendChild(top);
@@ -871,15 +905,81 @@ function card(o){
   if(has)meta.appendChild(el("span","more",o.more||"詳情"));
   if(meta.childNodes.length)head.appendChild(meta);
   root.appendChild(head);
-  if(has)root.appendChild(el("div","body",o.body));
+  if(has){var bd=el("div","body rt");if(o.body.nodeType)bd.appendChild(o.body);else bd.textContent=String(o.body);root.appendChild(bd)}
   return root;
 }
 
+
+/* ---------- emoji, Notion colors, rich text, logos ---------- */
+var SC={};
+var EMO={"評估比較中":"🔍","已付訂金":"💰","尾款待結清":"⏳","不考慮":"🚫","合作結束":"✅","未開始":"⚪","進行中":"🔄","完成":"✅",
+  "未付款":"🧾","分期付款":"🗓️","已結清":"✅","確定出席":"✅","不克出席":"❌","未回覆":"⏳","邀請中":"💌","禮到人不到":"🎁","已逾期":"⚠️","超支":"⚠️",
+  "場地":"🏛️","造型":"💄","婚戒":"💍","喜餅":"🍪","攝影":"📷","佈置":"💐","酒水":"🥂","其他":"✨",
+  "禮俗大項":"🧧","個人行頭":"👗","雜支與人員":"🧾","宴客相關":"🍽️","婚禮團隊":"👥","未分類":"📁",
+  "階段一":"📝","階段二":"🛍️","階段三":"📋","階段四":"🎬","階段五":"📦"};
+function clean(v){return String(v==null?"":v).replace(/^[^一-鿿A-Za-z0-9]+/,"").trim()}
+function emo(v){var c=clean(v),k=c.split(/[:：]/)[0];if(EMO[c])return EMO[c];if(EMO[k])return EMO[k];var m=String(v||"").match(/^\p{Extended_Pictographic}️?/u);return m?m[0]:""}
+function withEmo(v){var e=emo(v),c=clean(v);return(e?e+" ":"")+(c||"—")}
+function optColor(kind,key,val){
+  var f=SC[kind]&&SC[kind].fields.filter(function(x){return x.key===key})[0];
+  return f&&f.colors?f.colors[val]||null:null;
+}
+function nchip(kind,key,val,fallback){
+  var col=optColor(kind,key,val);
+  return chip(withEmo(val),col?"n n-"+col:(fallback||""));
+}
+function rich(item,key){
+  var segs=item&&item._rt&&item._rt[key];
+  if(!segs)return document.createTextNode(item&&item[key]!=null?String(item[key]):"");
+  var f=document.createDocumentFragment();
+  segs.forEach(function(g){
+    var n=document.createTextNode(g.t),w=n;
+    if(g.c){var c=el("code");c.appendChild(w);w=c}
+    if(g.b){var b=el("b");b.appendChild(w);w=b}
+    if(g.i){var i=el("i");i.appendChild(w);w=i}
+    if(g.s){var x=el("s");x.appendChild(w);w=x}
+    if(g.u){var u=el("u");u.appendChild(w);w=u}
+    if(g.k){var sp=el("span",/_background$/.test(g.k)?"bg-"+g.k.replace("_background",""):"c-"+g.k);sp.appendChild(w);w=sp}
+    var h=safeUrl(g.h);if(h){var a=el("a");a.href=h;a.target="_blank";a.rel="noopener noreferrer";a.appendChild(w);w=a}
+    f.appendChild(w);
+  });
+  return f;
+}
+function richBody(item,key){var t=item&&item[key];if(t==null||String(t).trim()==="")return null;var f=document.createDocumentFragment();f.appendChild(rich(item,key));return f}
+var SOCIAL=/(^|\.)(instagram\.com|facebook\.com|fb\.com|line\.me|lin\.ee|linktr\.ee|youtube\.com|google\.com|goo\.gl|maps\.app\.goo\.gl|threads\.net|momoshop\.com\.tw|shopee\.tw|weddingday\.com\.tw|marry\.com\.tw|verywed\.com)$/i;
+var MONO=["#D2A868","#DE8F9B","#9FB8A0","#8FA9C9","#B79CC9","#C9A27E"];
+function logoEl(v){
+  var w=el("span","logo"),u=safeUrl(v.u),host="";
+  try{host=u?new URL(u).hostname.replace(/^www\./,""):""}catch(e){}
+  function mono(){
+    w.className="logo mono";w.textContent="";
+    var ch=clean(v.n).replace(/^(the|my)\s+/i,"").charAt(0)||"?";
+    var col=optColor("vendors","t",v.t),h=0,s=String(v.n||"");for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;
+    w.style.background=col?"var(--logo-"+col+","+MONO[h%MONO.length]+")":MONO[h%MONO.length];
+    w.textContent=ch.toUpperCase();
+  }
+  function fav(){
+    if(!host||SOCIAL.test(host))return mono();
+    w.className="logo";w.textContent="";
+    var img=el("img","fav");img.alt="";img.loading="lazy";img.referrerPolicy="no-referrer";
+    img.src="https://www.google.com/s2/favicons?sz=128&domain="+encodeURIComponent(host);
+    img.onerror=mono;img.onload=function(){if(img.naturalWidth<=16)mono()};
+    w.appendChild(img);
+  }
+  /* 1) Notion 頁面圖示  2) 官網圖示  3) 店名第一個字 */
+  var ic=v.ic;
+  if(ic&&/^emoji:/.test(ic)){w.className="logo emoji";w.textContent=ic.slice(6)}
+  else if(safeUrl(ic)){
+    var pi=el("img");pi.alt="";pi.loading="lazy";pi.referrerPolicy="no-referrer";pi.src=ic;pi.onerror=fav;w.appendChild(pi);
+  }else fav();
+  return w;
+}
 /* ---------- render ---------- */
 var BOXES=["tiles","stages","pending","done","bsum","meter","balert","cats","items","vbooked","vgroups","gtot","gsplit","ggroups","glist","gchips"];
 function render(D){
   BOXES.forEach(function(id){var b=$(id);while(b.firstChild)b.removeChild(b.firstChild)});
   ["gq","gmore"].forEach(function(id){var o=$(id),n=o.cloneNode(true);o.parentNode.replaceChild(n,o)});
+  SC=D.schema||{};
   var meta=D.meta||{},T=D.tasks||[],B=D.budget||[],V=D.vendors||[],
       G=(D.guests||[]).map(function(g){return Array.isArray(g)?{n:g[0],g:g[1],s:g[2],c:g[3],v:g[4]}:g});
   var total=Number(meta.totalBudget)||0;
@@ -907,7 +1007,7 @@ function render(D){
   var stages=groupBy(T,function(t){return t.st||"未分階段"});
   stages.forEach(function(s){
     var parts=String(s[0]).split(/[:：]/),d=s[1].filter(function(t){return t.s==="完成"}).length;
-    var r=el("div","brow"),t=el("div","t",parts[0]);if(parts[1])t.appendChild(el("small",null,parts[1]));
+    var r=el("div","brow"),t=el("div","t",withEmo(parts[0]));if(parts[1])t.appendChild(el("small",null,parts[1]));
     var v=el("div","v");add(v,el("span","num",d)," / "+s[1].length);
     add(r,t,v,bar(pct(d,s[1].length)));$("stages").appendChild(r);
   });
@@ -916,12 +1016,12 @@ function render(D){
   $("pendingN").textContent=pend.length+" items";
   function taskCard(t,showStage){
     var chips=[];
-    if(t.d&&String(t.d).slice(0,10)<td)chips.push(chip("已逾期","rose"));
-    chips.push(chip(t.s||"未開始",t.s==="進行中"?"blush":""));
+    if(t.d&&String(t.d).slice(0,10)<td)chips.push(chip(withEmo("已逾期"),"rose"));
+    chips.push(nchip("tasks","s",t.s||"未開始",t.s==="進行中"?"blush":""));
     var m=[];
     if(t.d){var dd=el("span");add(dd,"期限 ",el("span","num",fmtDate(t.d)));m.push(dd)}
-    if(showStage&&t.st)m.push(el("span",null,String(t.st).split(/[:：]/)[0]));
-    return card({name:t.n,chips:chips,meta:m,body:t.todo,more:"待辦事項",edit:["tasks",t]});
+    if(showStage&&t.st)m.push(el("span",null,withEmo(String(t.st).split(/[:：]/)[0])));
+    return card({name:t.n,chips:chips,meta:m,body:richBody(t,"todo"),more:"待辦事項",edit:["tasks",t]});
   }
   var dated=pend.filter(function(t){return t.d}).sort(function(a,b){return String(a.d)<String(b.d)?-1:String(a.d)>String(b.d)?1:0});
   var P=$("pending");
@@ -932,7 +1032,7 @@ function render(D){
   var stOrder=stages.map(function(s){return s[0]});
   groupBy(pend.filter(function(t){return!t.d}),function(t){return t.st||"未分階段"})
     .sort(function(a,b){return stOrder.indexOf(a[0])-stOrder.indexOf(b[0])}).forEach(function(s){
-    P.appendChild(el("div","stage-tag reveal",String(s[0]).replace(/[:：]/," ・ ")));
+    P.appendChild(el("div","stage-tag reveal",withEmo(String(s[0]).split(/[:：]/)[0])+(String(s[0]).split(/[:：]/)[1]?" ・ "+String(s[0]).split(/[:：]/)[1]:"")));
     var g=el("div","grid cols2");s[1].forEach(function(t){g.appendChild(taskCard(t,false))});P.appendChild(g);
   });
   if(!pend.length){
@@ -946,7 +1046,7 @@ function render(D){
     top.appendChild(el("span","name",t.n));
     if(t.d)top.appendChild(el("span","num muted",fmtDate(t.d)));
     top.appendChild(editBtn("tasks",t,t.n));
-    c.appendChild(top);c.appendChild(el("div","body",t.c&&String(t.c).trim()?t.c:"已完成"));
+    c.appendChild(top);var cb=el("div","body rt");if(t.c&&String(t.c).trim())cb.appendChild(rich(t,"c"));else cb.textContent="已完成";c.appendChild(cb);
     $("done").appendChild(c);
   });
 
@@ -972,7 +1072,7 @@ function render(D){
   var cats=groupBy(B,function(b){return b.cat||"未分類"}).map(function(c){return{n:c[0],e:sum(c[1],function(b){return b.e}),a:sum(c[1],function(b){return b.a}),k:c[1].length}})
     .sort(function(a,b){return b.e-a.e}),cmax=Math.max.apply(null,cats.map(function(c){return Math.max(c.e,c.a)}).concat([1]));
   cats.forEach(function(c){
-    var r=el("div","brow"),t=el("div","t",c.n);t.appendChild(el("small",null,c.k+" 項・"+(est>0?Math.round(c.e/est*100):0)+"%"));
+    var r=el("div","brow"),t=el("div","t",withEmo(c.n));t.appendChild(el("small",null,c.k+" 項・"+(est>0?Math.round(c.e/est*100):0)+"%"));
     var v=el("div","v");v.appendChild(el("span","num",nf(c.e)));
     var b=el("div","progress-bar"),a=el("i","pale"),d=el("i","deep");a.dataset.w=pct(c.e,cmax).toFixed(1);d.dataset.w=pct(c.a,cmax).toFixed(1);add(b,a,d);
     add(r,t,v,b);
@@ -983,24 +1083,25 @@ function render(D){
   $("itemsN").textContent=B.length+" items";
   var payKind={"已結清":"gold","已付訂金":"blush"};
   B.slice().sort(function(a,b){return(b.e||0)-(a.e||0)}).forEach(function(b){
-    var chips=[];if((b.a||0)>(b.e||0))chips.push(chip("超支","rose"));
-    chips.push(chip(b.s||"未付款",payKind[b.s]||""));
+    var chips=[];if((b.a||0)>(b.e||0))chips.push(chip(withEmo("超支"),"rose"));
+    chips.push(nchip("budget","s",b.s||"未付款",payKind[b.s]||""));
     var m=[],e=el("span");add(e,"預估 ",el("span","num",nf(b.e)));m.push(e);
     if(b.a!=null){var a=el("span");add(a,"已付 ",el("span","num",nf(b.a)));m.push(a)}
     m.push(el("span",null,[b.cat,b.who].filter(Boolean).join("・")));
-    $("items").appendChild(card({name:b.n,chips:chips,meta:m,body:b.note,more:"備註",edit:["budget",b]}));
+    $("items").appendChild(card({name:b.n,chips:chips,meta:m,body:richBody(b,"note"),more:"備註",edit:["budget",b]}));
   });
 
   /* vendors */
   var vKind={"已付訂金":"gold","評估比較中":"mist"};
   function isOut(v){return/不考慮/.test(v.s||"")}
   function vCard(v,booked){
-    var m=[];if(booked)m.push(el("span",null,v.t));
+    var m=[];if(booked)m.push(el("span",null,withEmo(v.t)));
     var u=safeUrl(v.u);
     if(u){var a=el("a","link","前往連結 ↗");a.href=u;a.target="_blank";a.rel="noopener noreferrer";m.push(a)}
-    var body=[["報價",v.q],["聯絡",v.ct],["檔期",v.sch],["筆記",v.note]].filter(function(x){return x[1]&&String(x[1]).trim()});
-    body=body.length>1||(body.length===1&&body[0][0]!=="筆記")?body.map(function(x){return"【"+x[0]+"】\n"+x[1]}).join("\n\n"):(body[0]?body[0][1]:null);
-    return card({name:v.n,chips:[chip(String(v.s||"").replace(/^[^一-鿿A-Za-z]+/,"")||"—",vKind[v.s]||"")],meta:m,body:body,more:"筆記",cls:isOut(v)?"dim":"",edit:["vendors",v]});
+    var secs=[["💵 報價","q"],["📞 聯絡","ct"],["📅 檔期","sch"],["📝 筆記","note"]].filter(function(x){return v[x[1]]&&String(v[x[1]]).trim()});
+    var body=document.createDocumentFragment();
+    secs.forEach(function(x){if(secs.length>1||x[1]!=="note")body.appendChild(el("span","blabel",x[0]));body.appendChild(rich(v,x[1]));if(secs.length>1)body.appendChild(document.createTextNode("\n"))});
+    return card({name:v.n,logo:logoEl(v),chips:[nchip("vendors","s",v.s,vKind[clean(v.s)]||vKind[v.s]||"")],meta:m,body:body,more:"詳情",cls:isOut(v)?"dim":"",edit:["vendors",v]});
   }
   var booked=V.filter(function(v){return v.s==="已付訂金"});
   if(booked.length){
@@ -1011,7 +1112,7 @@ function render(D){
   groupBy(V.filter(function(v){return v.s!=="已付訂金"}),function(v){return v.t||"其他"})
     .sort(function(a,b){var x=order.indexOf(a[0]),y=order.indexOf(b[0]);return(x<0?99:x)-(y<0?99:y)})
     .forEach(function(g){
-      var h=el("h3","sub reveal",g[0]+" ");h.appendChild(el("small",null,g[1].length+""));$("vgroups").appendChild(h);
+      var h=el("h3","sub reveal",withEmo(g[0])+" ");h.appendChild(el("small",null,g[1].length+""));$("vgroups").appendChild(h);
       var gr=el("div","grid cols3");
       g[1].slice().sort(function(a,b){return isOut(a)-isOut(b)}).forEach(function(v){gr.appendChild(vCard(v,false))});
       $("vgroups").appendChild(gr);
@@ -1045,7 +1146,8 @@ function render(D){
     var r=el("div","grow"),n=el("div","n",g.n);n.appendChild(el("span","g",g.g||""));
     var c=el("div","cnt");add(c,el("span","num",g.c||0)," 位"+(g.v>0?"・素 "+g.v:""));
     var st=g.s==="確定出席"||g.s==="不克出席"?g.s:"未回覆";
-    add(r,n,c,chip(st,gKind[st]||""),editBtn("guests",g,g.n));
+    var gc=optColor("guests","s",g.s);
+    add(r,n,c,chip(withEmo(st),gc?"n n-"+gc:(gKind[st]||"")),editBtn("guests",g,g.n));
     return{el:r,name:String(g.n||"").toLowerCase(),side:side(g)};
   });
   var list=$("glist");rows.forEach(function(r){list.appendChild(r.el)});
@@ -1145,6 +1247,7 @@ function field(f,val,idx){
     if(f.t!=="status")inp.value=val==null?"":f.t==="date"?String(val).slice(0,10):String(val);
     else inp.value=val||(f.options||[])[0]||"";
     w.appendChild(inp);
+    if(f.t==="rich_text"&&eCtx&&eCtx.item&&eCtx.item._rt&&eCtx.item._rt[f.key])w.appendChild(el("span","rt-warn","這欄在 Notion 有粗體或顏色，在這裡修改後會變成純文字"));
   }
   inp.id=id;inp.name=f.key;if(f.t==="title")inp.required=true;
   return w;
