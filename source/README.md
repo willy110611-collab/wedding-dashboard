@@ -37,7 +37,7 @@
 - 每張卡片右上的筆可編輯全部欄位，各分頁的「＋ 新增」可新增，表單裡可刪除（移到 Notion 垃圾桶，可復原）。
 - `.github/workflows/sync.yml` 每 6 小時透過 Worker 抓資料、重新加密 `index.html`（離線快照），資料沒變就不 commit；也可在 Actions 手動 Run。
 - 需要的設定：
-  - Cloudflare Worker：貼上 `worker.js`，設定 `NOTION_TOKEN`、`SITE_PASSWORD`（Secret）、`ALLOWED_ORIGIN`、`TOTAL_BUDGET`。
+  - Cloudflare Worker `wedding-sync`：已連到這個 repo，push 到 main 會自動部署 `source/worker.js`（設定在 `wrangler.jsonc`）。後台要設定 `NOTION_TOKEN`、`SITE_PASSWORD`（Secret）、`ALLOWED_ORIGIN`、`TOTAL_BUDGET`。
   - Notion：建立 internal integration，並在「婚前準備」頁面的 Connections 加入它。
   - GitHub repo Secrets：`WORKER_URL`、`SITE_PASSWORD`。
 - 欄位對應寫在 `worker.js` 的 `KINDS`；Notion 欄位改名時要一起改。
